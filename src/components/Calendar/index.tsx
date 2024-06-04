@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import Calendar from "@toast-ui/react-calendar";
 import { EventObject } from "@toast-ui/calendar";
@@ -59,15 +59,6 @@ export default function CalendarComponent() {
       console.log("delete", event, instance);
     }
   };
-
-  useEffect(() => {
-    if (calendar.current) {
-      const instance = calendar.current.getInstance();
-
-      instance?.scrollToNow();
-      // instance?.setDate("2024-06-18");
-    }
-  }, []);
 
   return (
     <div style={{ padding: "10px" }}>
