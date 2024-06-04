@@ -48,8 +48,8 @@ export function Overlay({ position, closeFn }: OverlayInterface) {
           <span
             className="block absolute"
             style={{
-              left: `calc(${position.x}px - 4rem)`,
-              top: `calc(${position.y}px - 6.5rem)`,
+              left: `calc(${position.x}px - 3.5rem)`,
+              top: `calc(${position.y}px - 5.5rem)`,
             }}
           ></span>
         </Popover>
