@@ -1,0 +1,15 @@
+diff --git a/node_modules/@toast-ui/react-calendar/package.json b/node_modules/@toast-ui/react-calendar/package.json
+index 5798609..fb945fa 100644
+--- a/node_modules/@toast-ui/react-calendar/package.json
++++ b/node_modules/@toast-ui/react-calendar/package.json
+@@ -16,8 +16,8 @@
+   "types": "./types/index.d.ts",
+   "exports": {
+     ".": {
+-      "import": "./dist/toastui-react-calendar.mjs",
+-      "require": "./dist/toastui-react-calendar.js"
++      "import": {"default": "./dist/toastui-react-calendar.mjs", "types": "./types/index.d.ts"},
++      "require": {"default": "./dist/toastui-react-calendar.js", "types": "./types/index.d.ts"}
+     },
+     "./ie11": "./dist/toastui-react-calendar.ie11.js",
+     "./esm": "./dist/toastui-react-calendar.mjs"

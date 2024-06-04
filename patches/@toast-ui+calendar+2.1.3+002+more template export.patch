@@ -1,0 +1,34 @@
+diff --git a/node_modules/@toast-ui/calendar/types/index.d.ts b/node_modules/@toast-ui/calendar/types/index.d.ts
+index 2479275..4fe3cdd 100644
+--- a/node_modules/@toast-ui/calendar/types/index.d.ts
++++ b/node_modules/@toast-ui/calendar/types/index.d.ts
+@@ -6,9 +6,27 @@ import TZDate from "./time/date";
+ import type { ExternalEventTypes } from "./types/eventBus";
+ import type { EventObjectWithDefaultValues } from "./types/events";
+ import type { Options } from "./types/options";
+-import { TemplateNow } from './types/template';
++import {
++  TemplateNow,
++  TemplateTimezone,
++  TemplateMonthDayName,
++  TemplateWeekDayName,
++  TemplateMonthGrid,
++  TemplateTimeGridHourLabel,
++  Template,
++  TemplateMoreTitleDate
++} from './types/template';
+ 
+ export default Calendar;
+ export { Day, Month, TZDate, Week };
+ export type { EventObjectWithDefaultValues as EventObject, ExternalEventTypes, Options };
+-export { TemplateNow };
++export {
++  TemplateNow,
++  TemplateTimezone,
++  TemplateMonthDayName,
++  TemplateWeekDayName,
++  TemplateMonthGrid,
++  TemplateTimeGridHourLabel,
++  Template,
++  TemplateMoreTitleDate
++};

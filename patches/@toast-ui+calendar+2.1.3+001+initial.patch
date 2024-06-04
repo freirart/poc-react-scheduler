@@ -1,0 +1,29 @@
+diff --git a/node_modules/@toast-ui/calendar/package.json b/node_modules/@toast-ui/calendar/package.json
+index 5b2900f..2fd28d6 100644
+--- a/node_modules/@toast-ui/calendar/package.json
++++ b/node_modules/@toast-ui/calendar/package.json
+@@ -10,8 +10,8 @@
+   "module": "./dist/toastui-calendar.mjs",
+   "exports": {
+     ".": {
+-      "import": "./dist/toastui-calendar.mjs",
+-      "require": "./dist/toastui-calendar.js"
++      "import": {"default": "./dist/toastui-calendar.mjs", "types": "./types/index.d.ts"},
++      "require": {"default": "./dist/toastui-calendar.js", "types": "./types/index.d.ts"}
+     },
+     "./ie11": "./dist/toastui-calendar.ie11.js",
+     "./esm": "./dist/toastui-calendar.mjs",
+diff --git a/node_modules/@toast-ui/calendar/types/index.d.ts b/node_modules/@toast-ui/calendar/types/index.d.ts
+index 063d140..2479275 100644
+--- a/node_modules/@toast-ui/calendar/types/index.d.ts
++++ b/node_modules/@toast-ui/calendar/types/index.d.ts
+@@ -6,6 +6,9 @@ import TZDate from "./time/date";
+ import type { ExternalEventTypes } from "./types/eventBus";
+ import type { EventObjectWithDefaultValues } from "./types/events";
+ import type { Options } from "./types/options";
++import { TemplateNow } from './types/template';
++
+ export default Calendar;
+ export { Day, Month, TZDate, Week };
+ export type { EventObjectWithDefaultValues as EventObject, ExternalEventTypes, Options };
++export { TemplateNow };

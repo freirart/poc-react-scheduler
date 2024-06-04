@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+body {
+  font-family: "Inter", sans-serif;
+  color: #000e1897 !important;
+}
+
+.toastui-calendar-content,
+.toastui-calendar-section-button,
+.toastui-calendar-form-container .toastui-calendar-datepicker-container {
+  font-family: "Inter" !important;
+  color: #000e1897 !important;
+  font-weight: 500;
+}
+
+.toastui-calendar-section-button .toastui-calendar-icon {
+  top: 0;
+  margin-right: 8px;
+}
+
+.toastui-calendar-form-container > div:nth-child(2),
+.toastui-calendar-form-container > div:nth-child(3),
+.toastui-calendar-form-container .toastui-calendar-state-section,
+.toastui-calendar-form-container .toastui-calendar-popup-section-allday,
+.toastui-calendar-section-detail,
+.toastui-calendar-popup-container:has(.toastui-calendar-template-popupUpdate),
+.toastui-calendar-form-container
+  .toastui-calendar-datepicker-container
+  .tui-timepicker-minute
+  option:not([value="0"]):not([value="30"]),
+.toastui-calendar-popup-top-line {
+  display: none;
+}
+
+.toastui-calendar-week-view-day-names {
+  overflow-y: hidden !important;
+}
+
+.custom-day-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+  height: 5rem;
+}
+
+.custom-day-name > span {
+  display: block;
+  color: #000e1897 !important;
+  line-height: 20px;
+}
+
+.custom-day-name[data-today="true"] > span {
+  color: #30a46c;
+}
+
+.custom-day-name b {
+  color: #2b323b !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 20px;
+  height: 38px;
+  position: relative;
+}
+
+.custom-day-name[data-today="true"] b {
+  color: #fff !important;
+}
+
+.custom-day-name > b > span {
+  position: relative;
+  z-index: 20;
+}
+
+.custom-day-name[data-today="true"] b::before {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  display: block;
+  content: "";
+  width: 38px;
+  height: 38px;
+  background-color: #30a46c;
+  border-radius: 100%;
+}
+
+.toastui-calendar-week-view-day-names {
+  height: 5rem !important;
+}
+
+.toastui-calendar-week {
+  height: auto !important;
+}
+
+.toastui-calendar-timegrid-time > span,
+.toastui-calendar-timegrid-current-time > span,
+.toastui-calendar-template-time {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.toastui-calendar-timegrid-time > span {
+  color: #000e1897 !important;
+}
+
+.toastui-calendar-event-title > span {
+  color: #2b323b !important;
+}
+
+.toastui-calendar-template-popupDetailDate {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.popup-title {
+  display: flex;
+  align-items: center;
+}
+
+.ball {
+  display: block;
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  margin-right: 8px;
+}
+
+div[data-testid="grid-header-week"] {
+  border: 0 !important;
+}
+
+.toastui-calendar-panel.toastui-calendar-time {
+  scrollbar-width: thin;
+}
+
+.toastui-calendar-detail-container .toastui-calendar-section-header {
+  margin-bottom: 16px;
+}
+
+.toastui-calendar-day-view-day-names,
+.toastui-calendar-week-view-day-names {
+  border-bottom: 0px;
+}
+
+.toastui-calendar-day-name-item {
+  margin-top: -1px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.toastui-calendar-day-name-container {
+  margin-left: 42px !important;
+}
+
+.toastui-calendar-columns {
+  left: 42px !important;
+}
+
+.toastui-calendar-timegrid-time-column {
+  width: 42px !important;
+}
+
+.toastui-calendar-popup-container {
+  z-index: 30;
+}
