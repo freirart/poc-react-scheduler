@@ -5,6 +5,7 @@ import {
   EventObject,
   TemplateNow,
   TemplateWeekDayName,
+  Options,
 } from "@toast-ui/calendar";
 
 import { calendars } from "./activityReasons";
@@ -86,4 +87,14 @@ export const theme = {
       backgroundColor: "#00A43319",
     },
   },
+};
+
+export const week: Options["week"] = {
+  eventView: ["time"],
+  taskView: false,
+};
+
+export const gridSelection = {
+  enableClick: false,
+  enableDblClick: false,
 };

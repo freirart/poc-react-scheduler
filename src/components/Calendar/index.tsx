@@ -9,7 +9,7 @@ import "tui-time-picker/dist/tui-time-picker.css";
 
 import { initialEvents } from "./data";
 import { calendars } from "./activityReasons";
-import { template, theme } from "./config";
+import { gridSelection, template, theme, week } from "./config";
 
 const fillForm = () => {
   const $input = document.querySelector(
@@ -75,20 +75,14 @@ export default function CalendarComponent() {
         ref={calendar}
         height="600px"
         view="week"
-        week={{
-          eventView: ["time"],
-          taskView: false,
-        }}
+        week={week}
         theme={theme}
         template={template}
         useDetailPopup
         useFormPopup
         events={initialEvents}
         calendars={calendars}
-        gridSelection={{
-          enableClick: false,
-          enableDblClick: false,
-        }}
+        gridSelection={gridSelection}
         onBeforeCreateEvent={onBeforeCreateEvent}
         onBeforeUpdateEvent={onBeforeUpdateEvent}
         onBeforeDeleteEvent={onBeforeDeleteEvent}
