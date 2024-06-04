@@ -46,8 +46,6 @@ export const theme = {
 export const week: Options["week"] = {
   eventView: ["time"],
   taskView: false,
-  hourStart: 8,
-  hourEnd: 19,
 };
 
 export const gridSelection = {
