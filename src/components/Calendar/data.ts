@@ -1,33 +1,54 @@
 export const initialEvents = [
   {
     id: "1",
-    calendarId: "0",
-    title: "Lunch",
-    start: "2024-06-03T12:00:00",
+    calendarId: "2",
+    title: "Atendimento",
+    start: "2024-06-03T09:00:00",
     end: "2024-06-03T13:30:00",
   },
   {
     id: "2",
-    calendarId: "1",
-    title: "Coffee Break",
-    start: "2024-06-03T15:00:00",
+    calendarId: "3",
+    title: "Almoço",
+    start: "2024-06-03T13:30:00",
     end: "2024-06-03T15:30:00",
+  },
+  {
+    id: "3",
+    calendarId: "2",
+    title: "Atendimento",
+    start: "2024-06-03T15:30:00",
+    end: "2024-06-03T18:00:00",
   },
 ];
 
 export const calendars = [
   {
     id: "0",
-    name: "Private",
+    name: "Treinamento",
     color: "#fff",
     backgroundColor: "#9e5fff",
     borderColor: "#9e5fff",
   },
   {
     id: "1",
-    name: "Company",
+    name: "Problema de Infra",
     color: "#fff",
     backgroundColor: "#00a9ff",
     borderColor: "#00a9ff",
+  },
+  {
+    id: "2",
+    name: "Atendimento",
+    color: "#fff",
+    backgroundColor: "#30A46C",
+    borderColor: "#30A46C",
+  },
+  {
+    id: "3",
+    name: "Almoço",
+    color: "#fff",
+    backgroundColor: "#95a5a6",
+    borderColor: "#95a5a6",
   },
 ];
