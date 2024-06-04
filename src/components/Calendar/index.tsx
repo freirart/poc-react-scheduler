@@ -1,67 +1,101 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { format } from "date-fns";
 
 import Calendar from "@toast-ui/react-calendar";
-import { EventObject } from "@toast-ui/calendar";
+import { EventObject, TZDate } from "@toast-ui/calendar";
 
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 import "tui-date-picker/dist/tui-date-picker.css";
 import "tui-time-picker/dist/tui-time-picker.css";
 
-import { initialEvents } from "./data";
-import { calendars } from "./activityReasons";
-import { gridSelection, template, theme, week } from "./config";
+import { Overlay, OverlayPosition } from "../Overlay";
 
-const fillForm = () => {
-  const $input = document.querySelector(
-    'input[name="title"]'
-  ) as HTMLInputElement;
+import { initialEvents, calendars } from "./data";
+import { gridSelection, template, theme, week } from "./calendarConfig";
+import { EventDates, NativeEvent } from "./interfaces";
 
-  if ($input && $input.required) {
-    $input.required = false;
-  }
-
-  const $editBtn = document.querySelector(
-    'button[type="submit"]:has(.toastui-calendar-template-popupUpdate)'
-  ) as HTMLButtonElement;
-
-  if ($editBtn) {
-    $editBtn.click();
-  }
+const getFormattedDate = (dt: Date | TZDate) => {
+  const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
+  const timestamp = "yyyy-MM-dd'T'HH:mm:ss";
+  return format(dateToFormat, timestamp);
 };
 
-setInterval(fillForm, 200);
+const getUpdatedEvents = (
+  events: EventObject[],
+  eventId: string,
+  { start, end }: EventDates
+) => {
+  const updatedEvents = JSON.parse(JSON.stringify(events)) as EventObject[];
+
+  const eventBeingUpdated = updatedEvents.find((e) => e.id === eventId);
+
+  eventBeingUpdated.start = getFormattedDate(start);
+  eventBeingUpdated.end = getFormattedDate(end);
+
+  return updatedEvents;
+};
 
 export default function CalendarComponent() {
   const calendar = useRef<Calendar>(null);
 
-  const onBeforeCreateEvent = (event: EventObject) => {
-    if (calendar.current) {
-      const instance = calendar.current.getInstance();
+  const [events, setEvents] = useState(initialEvents);
+  const [overlayPosition, setOverlayPosition] =
+    useState<OverlayPosition | null>(null);
 
-      console.log("create", event, instance);
-    }
+  const getInstance = () => calendar.current?.getInstance();
+
+  const closeOverlay = () => setOverlayPosition(null);
+
+  const handleDragEvent = ({
+    event,
+    changes,
+  }: {
+    event: EventObject;
+    changes: EventDates;
+  }) => {
+    const instance = getInstance();
+    instance?.clear();
+
+    const updatedEvents = getUpdatedEvents(events, event.id, changes);
+
+    setEvents(updatedEvents);
   };
 
-  const onBeforeUpdateEvent = ({ event, changes }: EventObject) => {
-    if (calendar.current) {
-      const instance = calendar.current.getInstance();
-
-      instance?.updateEvent(event.id, event.calendarId, changes);
-
-      console.log("update", changes, event, instance);
-    }
+  const onClickEvent = ({ nativeEvent }: NativeEvent) => {
+    setOverlayPosition({ x: nativeEvent.pageX, y: nativeEvent.pageY });
   };
 
-  const onBeforeDeleteEvent = (event: EventObject) => {
-    if (calendar.current) {
-      const instance = calendar.current.getInstance();
+  const onSelectDateTime = ({
+    start,
+    end,
+    nativeEvent,
+  }: EventDates & NativeEvent) => {
+    setOverlayPosition({ x: nativeEvent.pageX, y: nativeEvent.pageY });
 
-      console.log("delete", event, instance);
-    }
+    const instance = getInstance();
+
+    setTimeout(() => {
+      instance?.clearGridSelections();
+
+      const activity = calendars.find((c) => c.id === "1")?.name;
+
+      const event = {
+        id: new Date().toString(),
+        calendarId: "1",
+        title: String(activity),
+        start: getFormattedDate(start),
+        end: getFormattedDate(end),
+      };
+
+      instance?.createEvents([event]);
+
+      setEvents((prevEvents) => [...prevEvents, event]);
+      closeOverlay();
+    }, 1000);
   };
 
   return (
-    <div style={{ padding: "10px" }}>
+    <div style={{ padding: "10px", position: "relative" }}>
       <Calendar
         ref={calendar}
         height="600px"
@@ -69,15 +103,14 @@ export default function CalendarComponent() {
         week={week}
         theme={theme}
         template={template}
-        useDetailPopup
-        useFormPopup
-        events={initialEvents}
+        events={events}
         calendars={calendars}
         gridSelection={gridSelection}
-        onBeforeCreateEvent={onBeforeCreateEvent}
-        onBeforeUpdateEvent={onBeforeUpdateEvent}
-        onBeforeDeleteEvent={onBeforeDeleteEvent}
+        onBeforeUpdateEvent={handleDragEvent}
+        onClickEvent={onClickEvent}
+        onSelectDateTime={onSelectDateTime}
       />
+      <Overlay position={overlayPosition} closeFn={closeOverlay} />
     </div>
   );
 }
