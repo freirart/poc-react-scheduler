@@ -1,5 +1,7 @@
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale/pt-BR";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+
+dayjs.locale("pt-br");
 
 import {
   EventObject,
@@ -15,11 +17,12 @@ export const template = {
   time: (event: EventObject) => <span>{event.title}</span>,
   weekDayName: ({ date: day, dateInstance }: TemplateWeekDayName) => {
     const eventDate = dateInstance.toDate();
-    const formattedDay = format(eventDate, "EEE", { locale: ptBR });
+    const formattedDay = dayjs(eventDate).format("dddd").split("-")[0];
 
-    const dateFormat = "yyyy-MM-dd";
+    const dateFormat = "YYYY-MM-DD";
     const isToday =
-      format(eventDate, dateFormat) === format(new Date(), dateFormat);
+      dayjs(eventDate).format(dateFormat) ===
+      dayjs(new Date()).format(dateFormat);
 
     return `
       <span data-today="${isToday}" class="custom-day-name">

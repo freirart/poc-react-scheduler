@@ -1,5 +1,5 @@
 import { RefObject, useState } from "react";
-import { format } from "date-fns";
+import dayjs from "dayjs";
 
 import Calendar from "@toast-ui/react-calendar";
 import { TZDate, EventObject } from "@toast-ui/calendar";
@@ -10,8 +10,8 @@ import { OverlayPosition } from "../Overlay";
 
 const getFormattedDate = (dt: Date | TZDate) => {
   const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
-  const timestamp = "yyyy-MM-dd'T'HH:mm:ss";
-  return format(dateToFormat, timestamp);
+  const timestamp = "YYYY-MM-DD[T]HH:mm:ss";
+  return dayjs(dateToFormat).format(timestamp);
 };
 
 const getUpdatedEvents = (

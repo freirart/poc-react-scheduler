@@ -16,4 +16,8 @@ module.exports = {
     ],
     "no-debugger": 0,
   },
+  compilerOptions: {
+    esModuleInterop: true,
+    allowSyntheticDefaultImports: true,
+  },
 };
