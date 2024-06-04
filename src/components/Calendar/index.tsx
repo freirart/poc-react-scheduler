@@ -14,6 +14,8 @@ import { initialEvents, calendars } from "./data";
 import { gridSelection, template, theme, week } from "./calendarConfig";
 import { EventDates, NativeEvent } from "./interfaces";
 
+import "./styles.css";
+
 const getFormattedDate = (dt: Date | TZDate) => {
   const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
   const timestamp = "yyyy-MM-dd'T'HH:mm:ss";
@@ -95,7 +97,10 @@ export default function CalendarComponent() {
   };
 
   return (
-    <div style={{ padding: "10px", position: "relative" }}>
+    <div
+      className="custom-tui-calendar"
+      style={{ padding: "10px", position: "relative" }}
+    >
       <Calendar
         ref={calendar}
         height="600px"
