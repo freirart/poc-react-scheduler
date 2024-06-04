@@ -97,6 +97,10 @@
   color: #000e1897 !important;
 }
 
+.custom-tui-calendar .toastui-calendar-template-time {
+  text-wrap: wrap;
+}
+
 /*
 ###################################
   Start of Calendar sides styling
