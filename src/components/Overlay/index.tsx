@@ -1,29 +1,29 @@
 import { Popover } from "antd";
 import { useEffect, useState } from "react";
 
-export interface OverlayPosition {
+export interface OverlayInfo {
   x: number;
   y: number;
 }
 
 interface OverlayInterface {
-  position: OverlayPosition | null;
+  info: OverlayInfo | null;
   closeFn: () => void;
 }
 
-export function Overlay({ position, closeFn }: OverlayInterface) {
-  const [open, setOpen] = useState(Boolean(position));
+export function Overlay({ info, closeFn }: OverlayInterface) {
+  const [open, setOpen] = useState(Boolean(info));
 
   useEffect(() => {
-    setOpen(Boolean(position));
-  }, [position]);
+    setOpen(Boolean(info));
+  }, [info]);
 
   const handleClose = () => {
     setOpen(false);
     setTimeout(closeFn, 200);
   };
 
-  if (!position) {
+  if (!info) {
     return null;
   }
 
@@ -48,8 +48,8 @@ export function Overlay({ position, closeFn }: OverlayInterface) {
           <span
             className="block absolute"
             style={{
-              left: `calc(${position.x}px - 3.5rem)`,
-              top: `calc(${position.y}px - 5.5rem)`,
+              left: `calc(${info.x}px - 3.5rem)`,
+              top: `calc(${info.y}px - 5.5rem)`,
             }}
           ></span>
         </Popover>

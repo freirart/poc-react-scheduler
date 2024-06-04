@@ -19,7 +19,7 @@ export default function CalendarComponent() {
     events,
     handleDragEvent,
     onClickEvent,
-    overlayPosition,
+    overlayInfo,
     onSelectDateTime,
     closeOverlay,
   } = useCalendar(calendar);
@@ -40,7 +40,7 @@ export default function CalendarComponent() {
         onClickEvent={onClickEvent}
         onSelectDateTime={onSelectDateTime}
       />
-      <Overlay position={overlayPosition} closeFn={closeOverlay} />
+      <Overlay info={overlayInfo} closeFn={closeOverlay} />
     </div>
   );
 }

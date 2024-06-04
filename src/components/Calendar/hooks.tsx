@@ -6,7 +6,7 @@ import { TZDate, EventObject } from "@toast-ui/calendar";
 
 import { calendars, initialEvents } from "./data";
 
-import { OverlayPosition } from "../Overlay";
+import { OverlayInfo } from "../Overlay";
 
 const getFormattedDate = (dt: Date | TZDate) => {
   const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
@@ -40,12 +40,14 @@ interface NativeEvent {
 
 export const useCalendar = (calendar: RefObject<Calendar>) => {
   const [events, setEvents] = useState(initialEvents);
-  const [overlayPosition, setOverlayPosition] =
-    useState<OverlayPosition | null>(null);
+  const [overlayInfo, setOverlayInfo] = useState<OverlayInfo | null>(null);
 
   const _getInstance = () => calendar.current?.getInstance();
 
-  const closeOverlay = () => setOverlayPosition(null);
+  const _defineOverlayInfo = (e: MouseEvent) =>
+    setOverlayInfo({ x: e.pageX, y: e.pageY });
+
+  const closeOverlay = () => setOverlayInfo(null);
 
   const handleDragEvent = ({
     event,
@@ -54,16 +56,13 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     event: EventObject;
     changes: EventDates;
   }) => {
-    const instance = _getInstance();
-    instance?.clear();
-
     const updatedEvents = getUpdatedEvents(events, event.id, changes);
 
     setEvents(updatedEvents);
   };
 
   const onClickEvent = ({ nativeEvent }: NativeEvent) => {
-    setOverlayPosition({ x: nativeEvent.pageX, y: nativeEvent.pageY });
+    _defineOverlayInfo(nativeEvent);
   };
 
   const onSelectDateTime = ({
@@ -71,8 +70,15 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     end,
     nativeEvent,
   }: EventDates & NativeEvent) => {
-    setOverlayPosition({ x: nativeEvent.pageX, y: nativeEvent.pageY });
+    _defineOverlayInfo(nativeEvent);
 
+    // the code below should be executed after the HESP form
+    // is submitted
+    //
+    // can be encapsulated in a function that receives:
+    // - the calendarId
+    // - start n end
+    // - raw: details, medical certificate delivered, reason
     const instance = _getInstance();
 
     setTimeout(() => {
@@ -96,7 +102,7 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
   };
 
   return {
-    overlayPosition,
+    overlayInfo,
     closeOverlay,
     handleDragEvent,
     onClickEvent,
