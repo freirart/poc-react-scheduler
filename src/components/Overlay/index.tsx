@@ -15,19 +15,25 @@ export function Overlay({ position, closeFn }: OverlayInterface) {
     return null;
   }
 
+  const handleClose = (open: boolean) => {
+    if (!open) {
+      setTimeout(closeFn, 200);
+    }
+  };
+
   return (
-    <div className="overlay">
-      <div>
+    <div className="absolute top-[5.5rem] left-12 w-[91.5%] h-[90%] z-10">
+      <div className="w-full h-full">
         <Popover
           defaultOpen
           title="Popover title!"
           content={<span>Popover content!</span>}
-          onOpenChange={(open) => (!open ? closeFn() : {})}
+          onOpenChange={handleClose}
           placement="right"
           trigger="click"
         >
           <span
-            className="ball"
+            className="block absolute"
             style={{
               left: `calc(${position.x}px - 4rem)`,
               top: `calc(${position.y}px - 6.5rem)`,
