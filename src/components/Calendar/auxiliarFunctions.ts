@@ -9,8 +9,12 @@ import {
   PopupType,
 } from "./interfaces";
 
+const getDateToFormat = (dt: ExpectedDateTypes) => {
+  return "toDate" in dt ? dt.toDate() : dt;
+};
+
 export const getFormattedDate = (dt: ExpectedDateTypes) => {
-  const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
+  const dateToFormat = getDateToFormat(dt);
   const timestamp = "YYYY-MM-DD[T]HH:mm:ss";
   return dayjs(dateToFormat).format(timestamp);
 };
@@ -34,15 +38,15 @@ export const getPopupCoordinates = (e: MouseEvent, popupType: PopupType) => {
   const getParent = (
     target: HTMLDivElement,
     depth: number,
-    currentInteration = 1
+    currentIteration = 1
   ): HTMLDivElement => {
     const parent = target.offsetParent as HTMLDivElement;
 
-    if (currentInteration === depth) {
+    if (currentIteration === depth) {
       return parent;
     }
 
-    return getParent(parent, depth, currentInteration + 1);
+    return getParent(parent, depth, currentIteration + 1);
   };
 
   const target = e.target as HTMLDivElement;
@@ -60,11 +64,11 @@ export const getEventInfo = (
   const event: OverlayInfo["event"] = {};
 
   if (eventStart) {
-    event.start = eventStart;
+    event.start = dayjs(getDateToFormat(eventStart)).subtract(3, "hours");
   }
 
   if (eventEnd) {
-    event.end = eventEnd;
+    event.end = dayjs(getDateToFormat(eventEnd)).subtract(3, "hours");
   }
 
   if (eventId) {

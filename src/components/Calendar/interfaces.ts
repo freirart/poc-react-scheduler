@@ -1,6 +1,7 @@
 import { TZDate } from "@toast-ui/calendar";
+import { Dayjs } from "dayjs";
 
-export type ExpectedDateTypes = Date | TZDate;
+export type ExpectedDateTypes = Date | TZDate | Dayjs;
 
 export interface EventDates {
   start: TZDate;
