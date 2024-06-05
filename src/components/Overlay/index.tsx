@@ -14,7 +14,7 @@ type CreateEventFn = (start: ExpectedDateTypes, end: ExpectedDateTypes) => void;
 
 type RemoveEventFn = (id: string) => void;
 
-interface PopupInterface {
+export interface PopupInterface {
   open: boolean;
   handleClose: () => void;
   createEvent: CreateEventFn;
