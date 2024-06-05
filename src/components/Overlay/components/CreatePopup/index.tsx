@@ -23,6 +23,9 @@ export default function CreatePopup({
       title="Create Popup"
       content={
         <div>
+          <pre>
+            <code>{JSON.stringify(event, null, 2)}</code>
+          </pre>
           <p>Selecione o tipo de horário especial: </p>
           <div>
             <Select placeholder="Problema Pessoal, Problema de Infra...">
