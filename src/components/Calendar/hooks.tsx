@@ -6,9 +6,11 @@ import { TZDate, EventObject } from "@toast-ui/calendar";
 
 import { calendars, initialEvents } from "./data";
 
-import { OverlayInfo } from "../Overlay";
+import { OverlayInfo, PopupType } from "../Overlay";
 
-const getFormattedDate = (dt: Date | TZDate) => {
+export type ExpectedDateTypes = Date | TZDate;
+
+const getFormattedDate = (dt: ExpectedDateTypes) => {
   const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
   const timestamp = "YYYY-MM-DD[T]HH:mm:ss";
   return dayjs(dateToFormat).format(timestamp);
@@ -44,8 +46,29 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
 
   const _getInstance = () => calendar.current?.getInstance();
 
-  const _defineOverlayInfo = (e: MouseEvent) =>
-    setOverlayInfo({ x: e.pageX, y: e.pageY });
+  const _defineOverlayInfo = (
+    e: MouseEvent,
+    popupType: PopupType,
+    eventStart?: ExpectedDateTypes,
+    eventEnd?: ExpectedDateTypes,
+    eventId?: string
+  ) => {
+    const info: OverlayInfo = { x: e.pageX, y: e.pageY, popupType, event: {} };
+
+    if (eventStart) {
+      info.event.start = eventStart;
+    }
+
+    if (eventEnd) {
+      info.event.end = eventEnd;
+    }
+
+    if (eventId) {
+      info.event.id = eventId;
+    }
+
+    setOverlayInfo(info);
+  };
 
   const closeOverlay = () => setOverlayInfo(null);
 
@@ -61,8 +84,11 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     setEvents(updatedEvents);
   };
 
-  const onClickEvent = ({ nativeEvent }: NativeEvent) => {
-    _defineOverlayInfo(nativeEvent);
+  const onClickEvent = ({
+    event,
+    nativeEvent,
+  }: NativeEvent & { event: EventObject }) => {
+    _defineOverlayInfo(nativeEvent, "edit", undefined, undefined, event.id);
   };
 
   const onSelectDateTime = ({
@@ -70,7 +96,7 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     end,
     nativeEvent,
   }: EventDates & NativeEvent) => {
-    _defineOverlayInfo(nativeEvent);
+    _defineOverlayInfo(nativeEvent, "create", start, end);
 
     // the code below should be executed after the HESP form
     // is submitted
@@ -79,26 +105,33 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     // - the calendarId
     // - start n end
     // - raw: details, medical certificate delivered, reason
+  };
+
+  const createEvent = (start: ExpectedDateTypes, end: ExpectedDateTypes) => {
     const instance = _getInstance();
 
-    setTimeout(() => {
-      instance?.clearGridSelections();
+    instance?.clearGridSelections();
 
-      const activity = calendars.find((c) => c.id === "1")?.name;
+    const activity = calendars.find((c) => c.id === "1")?.name;
 
-      const event = {
-        id: new Date().toString(),
-        calendarId: "1",
-        title: String(activity),
-        start: getFormattedDate(start),
-        end: getFormattedDate(end),
-      };
+    const event = {
+      id: new Date().toString(),
+      calendarId: "1",
+      title: String(activity),
+      start: getFormattedDate(start),
+      end: getFormattedDate(end),
+    };
 
-      instance?.createEvents([event]);
+    instance?.createEvents([event]);
 
-      setEvents((prevEvents) => [...prevEvents, event]);
-      closeOverlay();
-    }, 1000);
+    setEvents((prevEvents) => [...prevEvents, event]);
+    closeOverlay();
+  };
+
+  const removeEvent = (id: string) => {
+    const filteredEvents = events.filter((e) => e.id !== id);
+
+    setEvents(filteredEvents);
   };
 
   return {
@@ -108,5 +141,7 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     onClickEvent,
     onSelectDateTime,
     events,
+    createEvent,
+    removeEvent,
   };
 };
