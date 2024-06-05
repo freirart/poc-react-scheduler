@@ -2,15 +2,10 @@ import CalendarComponent from "./components/Calendar";
 
 export default function App() {
   return (
-    <div
-      style={{
-        width: "800px",
-        height: "650px",
-        border: "1px solid #ddd",
-        borderRadius: "10px",
-      }}
-    >
-      <CalendarComponent />
-    </div>
+    <main className="w-screen h-screen overflow-hidden flex justify-center items-center bg-slate-100">
+      <div className="w-[800px] rounded border-2 border-slate-200">
+        <CalendarComponent />
+      </div>
+    </main>
   );
 }

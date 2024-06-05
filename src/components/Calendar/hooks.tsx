@@ -1,44 +1,24 @@
 import { RefObject, useState } from "react";
-import dayjs from "dayjs";
 
 import Calendar from "@toast-ui/react-calendar";
-import { TZDate, EventObject } from "@toast-ui/calendar";
+import { EventObject } from "@toast-ui/calendar";
 
 import { calendars, initialEvents } from "./data";
 
-import { OverlayInfo, PopupType } from "../Overlay";
+import {
+  EventDates,
+  ExpectedDateTypes,
+  NativeEvent,
+  OverlayInfo,
+  PopupType,
+} from "./interfaces";
 
-export type ExpectedDateTypes = Date | TZDate;
-
-const getFormattedDate = (dt: ExpectedDateTypes) => {
-  const dateToFormat = "toDate" in dt ? dt.toDate() : dt;
-  const timestamp = "YYYY-MM-DD[T]HH:mm:ss";
-  return dayjs(dateToFormat).format(timestamp);
-};
-
-const getUpdatedEvents = (
-  events: EventObject[],
-  eventId: string,
-  { start, end }: EventDates
-) => {
-  const updatedEvents = JSON.parse(JSON.stringify(events)) as EventObject[];
-
-  const eventBeingUpdated = updatedEvents.find((e) => e.id === eventId);
-
-  eventBeingUpdated.start = getFormattedDate(start);
-  eventBeingUpdated.end = getFormattedDate(end);
-
-  return updatedEvents;
-};
-
-interface EventDates {
-  start: TZDate;
-  end: TZDate;
-}
-
-interface NativeEvent {
-  nativeEvent: MouseEvent;
-}
+import {
+  getFormattedDate,
+  getUpdatedEvents,
+  getPopupCoordinates,
+  getEventInfo,
+} from "./auxiliarFunctions";
 
 export const useCalendar = (calendar: RefObject<Calendar>) => {
   const [events, setEvents] = useState(initialEvents);
@@ -53,19 +33,11 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     eventEnd?: ExpectedDateTypes,
     eventId?: string
   ) => {
-    const info: OverlayInfo = { x: e.pageX, y: e.pageY, popupType, event: {} };
-
-    if (eventStart) {
-      info.event.start = eventStart;
-    }
-
-    if (eventEnd) {
-      info.event.end = eventEnd;
-    }
-
-    if (eventId) {
-      info.event.id = eventId;
-    }
+    const info: OverlayInfo = {
+      ...getPopupCoordinates(e, popupType),
+      popupType,
+      event: getEventInfo(eventStart, eventEnd, eventId),
+    };
 
     setOverlayInfo(info);
   };
@@ -97,14 +69,6 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     nativeEvent,
   }: EventDates & NativeEvent) => {
     _defineOverlayInfo(nativeEvent, "create", start, end);
-
-    // the code below should be executed after the HESP form
-    // is submitted
-    //
-    // can be encapsulated in a function that receives:
-    // - the calendarId
-    // - start n end
-    // - raw: details, medical certificate delivered, reason
   };
 
   const createEvent = (start: ExpectedDateTypes, end: ExpectedDateTypes) => {

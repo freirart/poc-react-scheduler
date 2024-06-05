@@ -101,6 +101,10 @@
   text-wrap: wrap;
 }
 
+.custom-tui-calendar .toastui-calendar-timegrid {
+  height: 150%;
+}
+
 /*
 ###################################
   Start of Calendar sides styling

@@ -3,33 +3,24 @@ import { ReactNode, useEffect, useState } from "react";
 import CreatePopup from "./components/CreatePopup";
 import EditPopup from "./components/EditPopup";
 
-import { ExpectedDateTypes } from "../Calendar/hooks";
-
-export type PopupType = "edit" | "create";
+import {
+  EventInfo,
+  ExpectedDateTypes,
+  OverlayInfo,
+  PopupType,
+} from "../Calendar/interfaces";
 
 type CreateEventFn = (start: ExpectedDateTypes, end: ExpectedDateTypes) => void;
+
 type RemoveEventFn = (id: string) => void;
 
-interface EventInfo {
-  start?: ExpectedDateTypes;
-  end?: ExpectedDateTypes;
-  id?: string;
-}
-
-export interface PopupInterface {
+interface PopupInterface {
   open: boolean;
   handleClose: () => void;
   createEvent: CreateEventFn;
   removeEvent: RemoveEventFn;
   event: EventInfo;
   children: ReactNode;
-}
-
-export interface OverlayInfo {
-  x: number;
-  y: number;
-  popupType: PopupType;
-  event: EventInfo;
 }
 
 interface OverlayInterface {
@@ -68,8 +59,8 @@ export function Overlay({
   const PopupToUse = PopupMap[info.popupType];
 
   return (
-    <div className="absolute top-[5.5rem] left-12 w-[91.5%] h-[90%] z-10">
-      <div className="w-full h-full">
+    <div className="h-full w-full absolute top-0 left-0 z-10">
+      <div className="h-full w-full relative">
         <PopupToUse
           open={open}
           handleClose={handleClose}
@@ -80,8 +71,8 @@ export function Overlay({
           <span
             className="block absolute"
             style={{
-              left: `calc(${info.x}px - 3.5rem)`,
-              top: `calc(${info.y}px - 5.5rem)`,
+              left: `${info.x}px`,
+              top: `${info.y}px`,
             }}
           ></span>
         </PopupToUse>

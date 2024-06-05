@@ -27,10 +27,10 @@ export default function CalendarComponent() {
   } = useCalendar(calendar);
 
   return (
-    <div className="custom-tui-calendar p-3 relative">
+    <div className="custom-tui-calendar px-4 pt-4 pb-12 relative bg-[#fff]">
       <Calendar
         ref={calendar}
-        height="600px"
+        height="36rem"
         view="week"
         week={week}
         theme={theme}
