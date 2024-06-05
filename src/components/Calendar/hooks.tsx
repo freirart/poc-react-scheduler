@@ -18,6 +18,7 @@ import {
   getUpdatedEvents,
   getPopupCoordinates,
   getEventInfo,
+  setToUTCTime,
 } from "./auxiliarFunctions";
 
 export const useCalendar = (calendar: RefObject<Calendar>) => {
@@ -42,7 +43,13 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     setOverlayInfo(info);
   };
 
-  const closeOverlay = () => setOverlayInfo(null);
+  const closeOverlay = () => {
+    const instance = _getInstance();
+
+    instance?.clearGridSelections();
+
+    setOverlayInfo(null);
+  };
 
   const handleDragEvent = ({
     event,
@@ -82,8 +89,8 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
       id: new Date().toString(),
       calendarId: "1",
       title: String(activity),
-      start: getFormattedDate(start),
-      end: getFormattedDate(end),
+      start: getFormattedDate(setToUTCTime(start)),
+      end: getFormattedDate(setToUTCTime(end)),
     };
 
     instance?.createEvents([event]);

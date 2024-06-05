@@ -10,14 +10,11 @@ import {
 } from "./interfaces";
 
 const getDateToFormat = (dt: ExpectedDateTypes) => {
-  return "toDate" in dt ? dt.toDate() : dt;
+  return dayjs("toDate" in dt ? dt.toDate() : dt);
 };
 
-export const getFormattedDate = (dt: ExpectedDateTypes) => {
-  const dateToFormat = getDateToFormat(dt);
-  const timestamp = "YYYY-MM-DD[T]HH:mm:ss";
-  return dayjs(dateToFormat).format(timestamp);
-};
+export const getFormattedDate = (dt: ExpectedDateTypes) =>
+  getDateToFormat(dt).format("YYYY-MM-DD[T]HH:mm:ss");
 
 export const getUpdatedEvents = (
   events: EventObject[],
@@ -56,6 +53,12 @@ export const getPopupCoordinates = (e: MouseEvent, popupType: PopupType) => {
   return { x: e.clientX - bounds.left - 6, y: e.clientY - bounds.top - 2 };
 };
 
+export const setToBrazilTime = (dt: ExpectedDateTypes) =>
+  getDateToFormat(dt).subtract(3, "hours");
+
+export const setToUTCTime = (dt: ExpectedDateTypes) =>
+  getDateToFormat(dt).add(3, "hours");
+
 export const getEventInfo = (
   eventStart?: ExpectedDateTypes,
   eventEnd?: ExpectedDateTypes,
@@ -64,11 +67,11 @@ export const getEventInfo = (
   const event: OverlayInfo["event"] = {};
 
   if (eventStart) {
-    event.start = dayjs(getDateToFormat(eventStart)).subtract(3, "hours");
+    event.start = setToBrazilTime(eventStart);
   }
 
   if (eventEnd) {
-    event.end = dayjs(getDateToFormat(eventEnd)).subtract(3, "hours");
+    event.end = setToBrazilTime(eventEnd);
   }
 
   if (eventId) {
