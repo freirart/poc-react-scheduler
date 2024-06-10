@@ -6,9 +6,9 @@ import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 
 import { Overlay } from "../Overlay";
 
-import { calendars } from "./data";
-import { gridSelection, template, theme, week } from "./calendarConfig";
-import { useCalendar } from "./hooks";
+import { calendars } from "./utils/data";
+import { gridSelection, template, theme, week } from "./utils/calendarConfig";
+import { useCalendar } from "./utils/hooks";
 
 import "./styles.css";
 

@@ -10,7 +10,6 @@ import {
   NativeEvent,
   OverlayInfo,
   PopupType,
-  EventObject,
 } from "./interfaces";
 
 import {
@@ -20,6 +19,7 @@ import {
   getEventInfo,
   setToUTCTime,
 } from "./auxiliarFunctions";
+import { Window } from "../models/Window";
 
 export const useCalendar = (calendar: RefObject<Calendar>) => {
   const [events, setEvents] = useState(initialEvents);
@@ -55,7 +55,7 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
     event,
     changes,
   }: {
-    event: EventObject;
+    event: Window;
     changes: EventDates;
   }) => {
     const updatedEvents = getUpdatedEvents(events, event.id, changes);
@@ -66,7 +66,7 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
   const onClickEvent = ({
     event,
     nativeEvent,
-  }: NativeEvent & { event: EventObject }) => {
+  }: NativeEvent & { event: Window }) => {
     _defineOverlayInfo(nativeEvent, "edit", undefined, undefined, event.id);
   };
 
@@ -83,15 +83,11 @@ export const useCalendar = (calendar: RefObject<Calendar>) => {
 
     instance?.clearGridSelections();
 
-    const activity = calendars.find((c) => c.id === "1")?.name;
-
-    const event = {
-      id: new Date().toString(),
-      calendarId: "1",
-      title: String(activity),
-      start: getFormattedDate(setToUTCTime(start)),
-      end: getFormattedDate(setToUTCTime(end)),
-    };
+    const event = new Window(
+      calendars[0],
+      getFormattedDate(setToUTCTime(start)),
+      getFormattedDate(setToUTCTime(end))
+    );
 
     instance?.createEvents([event]);
 

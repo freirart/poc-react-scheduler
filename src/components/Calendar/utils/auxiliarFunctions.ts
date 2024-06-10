@@ -5,8 +5,8 @@ import {
   ExpectedDateTypes,
   OverlayInfo,
   PopupType,
-  EventObject,
 } from "./interfaces";
+import { Window } from "../models/Window";
 
 const getDateToFormat = (dt: ExpectedDateTypes) => {
   return dayjs("toDate" in dt ? dt.toDate() : dt);
@@ -16,11 +16,11 @@ export const getFormattedDate = (dt: ExpectedDateTypes) =>
   getDateToFormat(dt).format("YYYY-MM-DD[T]HH:mm:ss");
 
 export const getUpdatedEvents = (
-  events: EventObject[],
+  events: Window[],
   eventId: string,
   { start, end }: EventDates
 ) => {
-  const updatedEvents = JSON.parse(JSON.stringify(events)) as EventObject[];
+  const updatedEvents = JSON.parse(JSON.stringify(events)) as Window[];
 
   const eventBeingUpdated = updatedEvents.find((e) => e.id === eventId);
 
@@ -81,3 +81,6 @@ export const getEventInfo = (
 
   return event;
 };
+
+export const getRandomId = () =>
+  Math.floor(Date.now() * Math.random()).toString();

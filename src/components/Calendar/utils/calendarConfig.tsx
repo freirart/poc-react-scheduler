@@ -4,14 +4,13 @@ import "dayjs/locale/pt-br";
 dayjs.locale("pt-br");
 
 import { TemplateNow, TemplateWeekDayName, Options } from "@toast-ui/calendar";
-
-import { EventObject } from "./interfaces";
+import { Window } from "../models/Window";
 
 export const template = {
   timegridDisplayPrimaryTime: function ({ time }: TemplateNow) {
     return `${time.getHours()} h`;
   },
-  time: (event: EventObject) => <span>{event.title}</span>,
+  time: (event: Window) => <span>{event.title}</span>,
   weekDayName: ({ date: day, dateInstance }: TemplateWeekDayName) => {
     const eventDate = dateInstance.toDate();
     const formattedDay = dayjs(eventDate).format("dddd").split("-")[0];
