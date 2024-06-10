@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
 
-import { EventObject } from "@toast-ui/calendar";
-
 import {
   EventDates,
   ExpectedDateTypes,
   OverlayInfo,
   PopupType,
+  EventObject,
 } from "./interfaces";
 
 const getDateToFormat = (dt: ExpectedDateTypes) => {
@@ -25,8 +24,10 @@ export const getUpdatedEvents = (
 
   const eventBeingUpdated = updatedEvents.find((e) => e.id === eventId);
 
-  eventBeingUpdated.start = getFormattedDate(start);
-  eventBeingUpdated.end = getFormattedDate(end);
+  if (eventBeingUpdated) {
+    eventBeingUpdated.start = getFormattedDate(start);
+    eventBeingUpdated.end = getFormattedDate(end);
+  }
 
   return updatedEvents;
 };

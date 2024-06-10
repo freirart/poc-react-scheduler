@@ -3,12 +3,9 @@ import "dayjs/locale/pt-br";
 
 dayjs.locale("pt-br");
 
-import {
-  EventObject,
-  TemplateNow,
-  TemplateWeekDayName,
-  Options,
-} from "@toast-ui/calendar";
+import { TemplateNow, TemplateWeekDayName, Options } from "@toast-ui/calendar";
+
+import { EventObject } from "./interfaces";
 
 export const template = {
   timegridDisplayPrimaryTime: function ({ time }: TemplateNow) {

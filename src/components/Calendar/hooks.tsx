@@ -1,7 +1,6 @@
 import { RefObject, useState } from "react";
 
 import Calendar from "@toast-ui/react-calendar";
-import { EventObject } from "@toast-ui/calendar";
 
 import { calendars, initialEvents } from "./data";
 
@@ -11,6 +10,7 @@ import {
   NativeEvent,
   OverlayInfo,
   PopupType,
+  EventObject,
 } from "./interfaces";
 
 import {

@@ -1,4 +1,6 @@
-export const initialEvents = [
+import { EventObject } from "./interfaces";
+
+export const initialEvents: EventObject[] = [
   {
     id: "1",
     calendarId: "2",
