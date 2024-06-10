@@ -8,7 +8,7 @@ import {
   ExpectedDateTypes,
   OverlayInfo,
   PopupType,
-} from "../Calendar/utils/interfaces";
+} from "../../utils/interfaces";
 
 type CreateEventFn = (start: ExpectedDateTypes, end: ExpectedDateTypes) => void;
 

@@ -4,7 +4,7 @@ import Calendar from "@toast-ui/react-calendar";
 
 import "@toast-ui/calendar/dist/toastui-calendar.min.css";
 
-import { Overlay } from "../Overlay";
+import { Overlay } from "./components/Overlay";
 
 import { calendars } from "./utils/data";
 import { gridSelection, template, theme, week } from "./utils/calendarConfig";
@@ -12,7 +12,7 @@ import { useCalendar } from "./utils/hooks";
 
 import "./styles.css";
 
-export default function CalendarComponent() {
+export function CalendarComponent() {
   const calendar = useRef<Calendar>(null);
 
   const {
