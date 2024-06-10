@@ -33,7 +33,9 @@ export default function CreatePopup({
               <Select.Option value="bar">bar</Select.Option>
             </Select>
           </div>
-          <p className="mt-2">Confira a duração de "Problema Pessoal":</p>
+          <p className="mt-2">
+            Confira a duração de &quot;Problema Pessoal&quot;:
+          </p>
           <div className="flex">
             <div>
               <TimePicker placeholder="Início" />

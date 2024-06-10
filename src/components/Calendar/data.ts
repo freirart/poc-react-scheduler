@@ -3,22 +3,22 @@ export const initialEvents = [
     id: "1",
     calendarId: "2",
     title: "Atendimento",
-    start: "2024-06-03T09:00:00",
-    end: "2024-06-03T13:30:00",
+    start: "2024-06-13T09:00:00",
+    end: "2024-06-13T13:30:00",
   },
   {
     id: "2",
     calendarId: "3",
     title: "Almoço",
-    start: "2024-06-03T13:30:00",
-    end: "2024-06-03T15:30:00",
+    start: "2024-06-13T13:30:00",
+    end: "2024-06-13T15:30:00",
   },
   {
     id: "3",
     calendarId: "2",
     title: "Atendimento",
-    start: "2024-06-03T15:30:00",
-    end: "2024-06-03T18:00:00",
+    start: "2024-06-13T15:30:00",
+    end: "2024-06-13T18:00:00",
   },
 ];
 
